@@ -1,0 +1,35 @@
+﻿@model da.Models.TINH_THANH
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TINH_THANH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tên_tỉnh_thành)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tên_tỉnh_thành)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KHUVUC.Tên_khu_vực)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KHUVUC.Tên_khu_vực)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Mã_tỉnh_thành }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DAamthucModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="KHUVUC">
+    <Key>
+      <PropertyRef Name="Mã khu vực" />
+    </Key>
+    <Property Name="Mã khu vực" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Tên khu vực" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MONAN">
+    <Key>
+      <PropertyRef Name="Mã món" />
+    </Key>
+    <Property Name="Mã món" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Tên món ăn" Type="varchar" MaxLength="50" />
+    <Property Name="công thức" Type="varchar" MaxLength="50" />
+    <Property Name="Mã tỉnh/thành" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TAIKHOAN">
+    <Key>
+      <PropertyRef Name="Mã TK" />
+    </Key>
+    <Property Name="Mã TK" Type="int" Nullable="false" />
+    <Property Name="Tên TK" Type="varchar" MaxLength="50" />
+    <Property Name="Mật khẩu" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TINH/THANH">
+    <Key>
+      <PropertyRef Name="Mã tỉnh/thành" />
+    </Key>
+    <Property Name="Mã tỉnh/thành" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Tên tỉnh/thành" Type="varchar" MaxLength="50" />
+    <Property Name="Mã khu vực" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_MONAN_TINH/THANH">
+    <End Role="TINH/THANH" Type="Self.TINH/THANH" Multiplicity="0..1" />
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TINH/THANH">
+        <PropertyRef Name="Mã tỉnh/thành" />
+      </Principal>
+      <Dependent Role="MONAN">
+        <PropertyRef Name="Mã tỉnh/thành" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TINH/THANH_KHUVUC">
+    <End Role="KHUVUC" Type="Self.KHUVUC" Multiplicity="0..1" />
+    <End Role="TINH/THANH" Type="Self.TINH/THANH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHUVUC">
+        <PropertyRef Name="Mã khu vực" />
+      </Principal>
+      <Dependent Role="TINH/THANH">
+        <PropertyRef Name="Mã khu vực" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DAamthucModelStoreContainer">
+    <EntitySet Name="KHUVUC" EntityType="Self.KHUVUC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MONAN" EntityType="Self.MONAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TINH/THANH" EntityType="Self.TINH/THANH" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_MONAN_TINH/THANH" Association="Self.FK_MONAN_TINH/THANH">
+      <End Role="TINH/THANH" EntitySet="TINH/THANH" />
+      <End Role="MONAN" EntitySet="MONAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TINH/THANH_KHUVUC" Association="Self.FK_TINH/THANH_KHUVUC">
+      <End Role="KHUVUC" EntitySet="KHUVUC" />
+      <End Role="TINH/THANH" EntitySet="TINH/THANH" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

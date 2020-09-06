@@ -1,0 +1,46 @@
+﻿@model IEnumerable<da.Models.MONAN>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tên_món_ăn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.công_thức)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TINH_THANH.Tên_tỉnh_thành)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tên_món_ăn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.công_thức)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TINH_THANH.Tên_tỉnh_thành)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Mã_món }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Mã_món }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Mã_món })
+        </td>
+    </tr>
+}
+
+</table>

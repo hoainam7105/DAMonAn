@@ -1,0 +1,43 @@
+﻿@model da.Models.MONAN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MONAN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tên_món_ăn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tên_món_ăn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.công_thức)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.công_thức)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TINH_THANH.Tên_tỉnh_thành)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TINH_THANH.Tên_tỉnh_thành)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Mã_món }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DAamthucModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="KHUVUC">
+    <Key>
+      <PropertyRef Name="Mã_khu_vực" />
+    </Key>
+    <Property Name="Mã_khu_vực" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tên_khu_vực" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TINH_THANH" Relationship="Self.FK_TINH_THANH_KHUVUC" FromRole="KHUVUC" ToRole="TINH_THANH" />
+  </EntityType>
+  <EntityType Name="MONAN">
+    <Key>
+      <PropertyRef Name="Mã_món" />
+    </Key>
+    <Property Name="Mã_món" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tên_món_ăn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="công_thức" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Mã_tỉnh_thành" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TINH_THANH" Relationship="Self.FK_MONAN_TINH_THANH" FromRole="MONAN" ToRole="TINH_THANH" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TAIKHOAN">
+    <Key>
+      <PropertyRef Name="Mã_TK" />
+    </Key>
+    <Property Name="Mã_TK" Type="Int32" Nullable="false" />
+    <Property Name="Tên_TK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Mật_khẩu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TINH_THANH">
+    <Key>
+      <PropertyRef Name="Mã_tỉnh_thành" />
+    </Key>
+    <Property Name="Mã_tỉnh_thành" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tên_tỉnh_thành" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Mã_khu_vực" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="KHUVUC" Relationship="Self.FK_TINH_THANH_KHUVUC" FromRole="TINH_THANH" ToRole="KHUVUC" />
+    <NavigationProperty Name="MONANs" Relationship="Self.FK_MONAN_TINH_THANH" FromRole="TINH_THANH" ToRole="MONAN" />
+  </EntityType>
+  <Association Name="FK_TINH_THANH_KHUVUC">
+    <End Role="KHUVUC" Type="Self.KHUVUC" Multiplicity="0..1" />
+    <End Role="TINH_THANH" Type="Self.TINH_THANH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHUVUC">
+        <PropertyRef Name="Mã_khu_vực" />
+      </Principal>
+      <Dependent Role="TINH_THANH">
+        <PropertyRef Name="Mã_khu_vực" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MONAN_TINH_THANH">
+    <End Role="TINH_THANH" Type="Self.TINH_THANH" Multiplicity="0..1" />
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TINH_THANH">
+        <PropertyRef Name="Mã_tỉnh_thành" />
+      </Principal>
+      <Dependent Role="MONAN">
+        <PropertyRef Name="Mã_tỉnh_thành" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DAamthucEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="KHUVUCs" EntityType="Self.KHUVUC" />
+    <EntitySet Name="MONANs" EntityType="Self.MONAN" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+    <EntitySet Name="TINH_THANH" EntityType="Self.TINH_THANH" />
+    <AssociationSet Name="FK_TINH_THANH_KHUVUC" Association="Self.FK_TINH_THANH_KHUVUC">
+      <End Role="KHUVUC" EntitySet="KHUVUCs" />
+      <End Role="TINH_THANH" EntitySet="TINH_THANH" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MONAN_TINH_THANH" Association="Self.FK_MONAN_TINH_THANH">
+      <End Role="TINH_THANH" EntitySet="TINH_THANH" />
+      <End Role="MONAN" EntitySet="MONANs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
